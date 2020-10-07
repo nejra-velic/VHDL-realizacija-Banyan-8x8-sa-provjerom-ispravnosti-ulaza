@@ -1,0 +1,62 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+
+ENTITY provjera_bita_testbench IS
+END provjera_bita_testbench;
+
+ARCHITECTURE arch_provjera_bita_testbench OF provjera_bita_testbench IS
+  COMPONENT provjera_bita IS
+    PORT (
+      X: IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+      Y: OUT STD_LOGIC_VECTOR (3 DOWNTO 0)
+    );
+  END COMPONENT;
+  SIGNAL s_x,s_y : STD_LOGIC_VECTOR(3 DOWNTO 0);
+BEGIN
+  uut: provjera_bita
+  PORT MAP(
+    X => s_x,
+    Y => s_y
+  );
+  stim: PROCESS
+  BEGIN
+    s_x <= "0000"; WAIT FOR 20ns;
+    s_x <= "0001"; WAIT FOR 20ns;
+    s_x <= "0010"; WAIT FOR 20ns;
+    s_x <= "0011"; WAIT FOR 20ns;
+    s_x <= "0100"; WAIT FOR 20ns;
+    s_x <= "0101"; WAIT FOR 20ns;
+    s_x <= "0110"; WAIT FOR 20ns;
+    s_x <= "0111"; WAIT FOR 20ns;
+    s_x <= "1000"; WAIT FOR 20ns;
+    s_x <= "1001"; WAIT FOR 20ns;
+    s_x <= "1010"; WAIT FOR 20ns;
+    s_x <= "1011"; WAIT FOR 20ns;
+    s_x <= "1100"; WAIT FOR 20ns;
+    s_x <= "1101"; WAIT FOR 20ns;
+    s_x <= "1110"; WAIT FOR 20ns;
+    s_x <= "1111"; WAIT FOR 20ns;
+    WAIT;
+  END PROCESS;
+  verif: PROCESS
+  BEGIN
+    WAIT FOR 10ns;
+    ASSERT (s_y = "0000") REPORT "Greska 1" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 2" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 3" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "0011") REPORT "Greska 4" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 5" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "0101") REPORT "Greska 6" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "0110") REPORT "Greska 7" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 8" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 9" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "1001") REPORT "Greska 10" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "1010") REPORT "Greska 11" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 12" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "1100") REPORT "Greska 13" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 14" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "ZZZZ") REPORT "Greska 15" SEVERITY error; WAIT FOR 20ns;
+    ASSERT (s_y = "1111") REPORT "Greska 16" SEVERITY error; WAIT FOR 20ns;
+    WAIT;
+  END PROCESS;
+END ARCHITECTURE;
